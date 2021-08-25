@@ -292,7 +292,7 @@ partial class PuzzleGenerator : Sandbox.Entity
     }
 
     public static float GetWobbleAt(float x, float y) {
-		return (Noise.Perlin( x * 0.1f, y * 0.1f, 0 )) * Instance.wobbleAmount;
+		return (Noise.Perlin( x * 0.1f, y * 0.1f, 0 )) * Instance.wobbleAmount * 64;
     }
 
 }

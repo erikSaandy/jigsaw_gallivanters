@@ -33,11 +33,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\jigsawgallivanters\\code\\jigsawgallivanters.csproj",
-      "projectName": "jigsawgallivanters",
-      "projectPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\jigsawgallivanters\\code\\jigsawgallivanters.csproj",
+      "projectUniqueName": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\sbox_jigsaw\\code\\sbox_jigsaw.csproj",
+      "projectName": "sbox_jigsaw",
+      "projectPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\sbox_jigsaw\\code\\sbox_jigsaw.csproj",
       "packagesPath": "C:\\Users\\SandPile\\.nuget\\packages\\",
-      "outputPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\jigsawgallivanters\\code\\obj\\",
+      "outputPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\sbox_jigsaw\\code\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
