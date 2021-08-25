@@ -1,0 +1,19 @@
+D:\Steam Library\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.csproj.AssemblyReference.cache
+D:\Steam Library\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.GeneratedMSBuildEditorConfig.editorconfig
+D:\Steam Library\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.AssemblyInfoInputs.cache
+D:\Steam Library\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.AssemblyInfo.cs
+D:\Steam Library\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.csproj.CoreCompileInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\.intermediate\net5.0\jigsawgallivanters.deps.json
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\.intermediate\net5.0\jigsawgallivanters.dll
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\.intermediate\net5.0\ref\jigsawgallivanters.dll
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\.intermediate\net5.0\jigsawgallivanters.pdb
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\.intermediate\net5.0\jigsawgallivanters.xml
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.csproj.AssemblyReference.cache
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.GeneratedMSBuildEditorConfig.editorconfig
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.AssemblyInfoInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.AssemblyInfo.cs
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.csproj.CoreCompileInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.csproj.CopyComplete
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.dll
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\ref\jigsawgallivanters.dll
+C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\jigsawgallivanters\code\obj\Debug\net5.0\jigsawgallivanters.pdb
