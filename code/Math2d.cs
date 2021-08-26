@@ -24,10 +24,20 @@ namespace Saandy {
             return (360 - (float)Math.Round(a)) % 360;
         }
 
+		public static float Angle3D( Vector3 v1, Vector3 v2, Vector3 up ) {
+			var cross = Vector3.Cross( v1, v2 );
+			var dot = Vector3.Dot( v1, v2 );
+			var angle = Math.Atan2( cross.Length, dot );
+
+			var test = Vector3.Dot( up, cross );
+			if ( test < 0.0 ) angle = -angle;
+			return (float)angle * Rad2Deg;
+		}
+
 		/// <summary>
 		/// Get x and y coordinates from index.
 		/// </summary>
-        public static void FlattenedArrayIndex(int i, int w, out int x, out int y) {
+		public static void FlattenedArrayIndex(int i, int w, out int x, out int y) {
             y = i / w;
             x = i % w;
         }
@@ -97,8 +107,6 @@ namespace Saandy {
             return true;
         }
 
-        //Clamp list indices
-        //Will even work if index is larger/smaller than listSize, so can loop multiple times
         public static int ClampListIndex(int index, int listSize) {
             index = ((index % listSize) + listSize) % listSize;
 
@@ -138,6 +146,10 @@ namespace Saandy {
             Vector2 p1 = QuadraticCurve(b, c, d, t);
             return Lerp(p0, p1, t);
         }
+
+		public static float Map( float input, float inputMin, float inputMax, float min, float max ) {
+			return min + (input - inputMin) * (max - min) / (inputMax - inputMin);
+		}
 
         public class Line {
             public Vector2 pointA;
