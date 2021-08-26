@@ -8,9 +8,11 @@ using Sandbox;
 
 partial class PuzzleGenerator : Sandbox.Entity
 {
+	public const int backsideUVTiling = 4;
 	public const float pieceThickness = 0.06f;
 	private const int PipPointCount = 12;
 	private const int BodyPointCount = 12;
+
 
 	public const int scale = 32;
 
@@ -63,7 +65,7 @@ partial class PuzzleGenerator : Sandbox.Entity
 		DefaultImageMat.OverrideTexture( "Color", PuzzleImage );
 		currentManager = new PuzzleManager( width, height, DefaultImageMat );
 
-		// Iterate through the array "randomly".
+		//Iterate through the array "randomly".
 		int p = 37;
 		int s = width * height;
 		int q = p % s;
@@ -73,17 +75,10 @@ partial class PuzzleGenerator : Sandbox.Entity
 			q = (q + p) % s;
 		}
 
-		//for ( int x = 0; x < width; x++ )
-		//{
-		//	for ( int y = 0; y < height; y++ )
-		//	{
-		//		Log.Info( "( " + x + ", " + y + " )" );
-		//		GeneratePiece( x, y );
-		//	}
-		//}
-
 		//GeneratePiece( Rand.Int( 0, width - 1 ), Rand.Int( 0, height - 1 ) );
-    }
+
+		//GeneratePiece( 0, 0 );
+	}
 
 
 	private void GetDimensions( out int pieceCount )
@@ -152,7 +147,9 @@ partial class PuzzleGenerator : Sandbox.Entity
 		Vector2 pos = new Vector2(x, y) * scale;           
 
 		PuzzlePiece pieceEntity = new PuzzlePiece( currentManager );
-		pieceEntity.Position = pos * 1.25f;
+		
+		// TEMP
+		pieceEntity.Position = pos;
 		pieceEntity.Position += Vector3.Up * 512;
 
 		// Mesh building //
@@ -166,8 +163,20 @@ partial class PuzzleGenerator : Sandbox.Entity
 		.WithSurface( "wood" )
 		.Create();
 
+		//for ( int i = 0; i < 4; i++ )
+		//{
+		//	bool isEdge = pieceData.SideIsOnEdge( i );
+		//	Vector2 sideDir = pieceData.GetSideNormal( i );
+
+		//	// if pip goes out...
+		//	if (!isEdge && pieces[pieceData.x + (int)sideDir.x, pieceData.y + (int)sideDir.y] == null ) {
+		//		model.AddCollisionBox( new Vector3( 0.2f, 0.2f, pieceThickness / 2 ) * scale, (sideDir * scale / 2) );
+		//	}
+		//}
+
 		pieceEntity.SetModel( model );
 		pieceEntity.SetupPhysicsFromModel( PhysicsMotionType.Dynamic );
+
 		//pieceEntity.Rotation = Rotation.RotateAroundAxis( Vector3.Up, 180 );
 
         pieceEntity.x = x;
@@ -185,7 +194,7 @@ partial class PuzzleGenerator : Sandbox.Entity
             piece.contourSideStartID[i] = piece.polygon.contour.Count;
 
             Math2d.Line side = piece.GetSide(i);
-            Vector2 sideDir = piece.GetSideFlowDirection(i);
+            Vector2 sideDir = piece.GetSideNormal(i);
             bool needsPip = !piece.SideIsOnEdge(i); //  needs pip if side isn't on edge.
 
 			// Has neighbor on side
@@ -330,7 +339,7 @@ public class PieceData {
     public Vector2 Center => center;
   
 
-    public Vector2 GetSideFlowDirection(int index) {
+    public Vector2 GetSideNormal(int index) {
         switch (index) {
             case 0:
                 return new Vector2(-1, 0); // left
@@ -391,13 +400,12 @@ public class MeshBuilder
 		m1.CreateBuffers( vb, true );
 		m1.SetIndexRange( 0, mesh1VertexCount );
 
-		Log.Info( mesh1VertexCount + " :: " + (vertexCount + 1 - mesh1VertexCount) );
-
 		Mesh m2 = new Mesh( PuzzleGenerator.Instance.BacksideMat );
 		m2.Material = PuzzleGenerator.Instance.BacksideMat;
 		m2.SetBounds( -PuzzleGenerator.scale / 2, PuzzleGenerator.scale / 2 );
 		m2.CreateBuffers( vb, true );
 		m2.SetIndexRange( mesh1VertexCount, vertexCount );
+
 		m = new Mesh[2] { m1, m2 };
 
 	}
@@ -422,19 +430,19 @@ public class MeshBuilder
 					v3 - position - thicknessOffset,
 					Vector3.Down,
 					Vector3.Backward,
-					Vector2.One - new Vector2( v3.x / uMax, v3.y / vMax ) ),
+					Vector2.One - new Vector2( v3.x / (uMax / PuzzleGenerator.backsideUVTiling), v3.y / (uMax / PuzzleGenerator.backsideUVTiling) ) ),
 
 				new Sandbox.Vertex(
 					v2 - position - thicknessOffset,
 					Vector3.Down,
 					Vector3.Backward,
-					Vector2.One - new Vector2( v2.x / uMax, v2.y / vMax ) ),
+					Vector2.One - new Vector2( v2.x / (uMax / PuzzleGenerator.backsideUVTiling), v2.y / (uMax / PuzzleGenerator.backsideUVTiling) ) ),
 
 				new Sandbox.Vertex(
 					v1 - position - thicknessOffset,
 					Vector3.Down,
 					Vector3.Backward,
-					Vector2.One - new Vector2( v1.x / uMax, v1.y / vMax ) )
+					Vector2.One - new Vector2( v1.x / (uMax / PuzzleGenerator.backsideUVTiling), v1.y / (uMax / PuzzleGenerator.backsideUVTiling) ) )
 			);
 		}	
 		else
@@ -444,19 +452,19 @@ public class MeshBuilder
 					v1 - position + thicknessOffset,
 					Vector3.Up,
 					Vector3.Forward,
-					Vector2.One - new Vector2( v1.x / uMax, v1.y / vMax ) ),
+					new Vector2( v1.x / uMax, 1 - (v1.y / vMax) ) ),
 
 				new Sandbox.Vertex(
 					v2 - position + thicknessOffset,
 					Vector3.Up,
 					Vector3.Forward,
-					Vector2.One - new Vector2( v2.x / uMax, v2.y / vMax ) ),
+					new Vector2( v2.x / uMax, 1 - (v2.y / vMax) ) ),
 
 				new Sandbox.Vertex(
 					v3 - position + thicknessOffset,
 					Vector3.Up,
 					Vector3.Forward,
-					Vector2.One - new Vector2( v3.x / uMax, v3.y / vMax ) )
+					new Vector2( v3.x / uMax, 1 - (v3.y / vMax) ) )
 			);
 		}
 
@@ -469,10 +477,6 @@ public class MeshBuilder
 		position += new Vector2( PuzzleGenerator.scale ) / 2;
 		Vector3 thicknessOffset = Vector3.Up * PuzzleGenerator.scale * (PuzzleGenerator.pieceThickness / 2);
 
-		int contourCount = piece.polygon.contour.Count;
-		float uvStepX = (1f / contourCount);
-		float uvStepY = PuzzleGenerator.pieceThickness / 2f;
-
 		// Initial points on trim //
 		Vector3 a = ( Vector3)piece.polygon.contour.points[0] - (Vector3)position - thicknessOffset;
 		Vector3 b = ( Vector3)piece.polygon.contour.points[0] - (Vector3)position + thicknessOffset;
@@ -480,7 +484,11 @@ public class MeshBuilder
 		Vector3 d = ( Vector3)piece.polygon.contour.points[1] - (Vector3)position - thicknessOffset;
 
 		Vector3 tangent = (d - a);
-		Vector3 nrmlB = Vector3.Cross( Vector3.Forward, tangent );
+		Vector3 nrmlB = Vector3.Cross( tangent, (a - b) );
+
+		int contourCount = piece.polygon.contour.Count;
+		float uvStepX = 0.1f * (d - a).Length / PuzzleGenerator.backsideUVTiling;
+		float uvStepY = PuzzleGenerator.pieceThickness / 2f;
 
 		vb.AddQuad(
 			new Sandbox.Vertex( a, nrmlB, tangent, new Vector2( 0, 0 ) ),
@@ -496,50 +504,30 @@ public class MeshBuilder
 		for ( int i = 0; i < contourCount; i++ )
 		{
 
-			tangent = (d - a);
-			nrmlB = Vector3.Cross( Vector3.Forward, tangent );
+			nrmlB = Vector3.Cross( tangent, (a - b).Normal );
 
 			a = d;
 			b = c;
 			c = ( Vector3)piece.polygon.contour.points[Math2d.ClampListIndex( i + 1, contourCount )] - (Vector3)position + thicknessOffset;
 			d = ( Vector3)piece.polygon.contour.points[Math2d.ClampListIndex( i + 1, contourCount )] - (Vector3)position - thicknessOffset;
 
-			Vector3 nrmlA = Vector3.Cross( Vector3.Forward, tangent );
-			angle = Math.Abs( Math2d.Angle( nrmlB ) - Math2d.Angle( nrmlA ) );
+			tangent = (d - a);
+			Vector3 nrmlA = Vector3.Cross( tangent, (a - b) );
 
-			cStep = uvStepX * i;
-
-			vb.AddQuad(
-				new Sandbox.Vertex( a, nrmlB, tangent, new Vector2( cStep, 0 ) ),
-				new Sandbox.Vertex( b, nrmlB, tangent, new Vector2( cStep, uvStepY ) ),
-				new Sandbox.Vertex( c, nrmlB, tangent, new Vector2( cStep + uvStepX, uvStepY ) ),
-				new Sandbox.Vertex( d, nrmlB, tangent, new Vector2( cStep + uvStepX, 0 ) )
-			);
+			cStep += uvStepX;
+			uvStepX = 0.1f * (d - a).Length / PuzzleGenerator.backsideUVTiling;
 
 			vertexCount += 4;
 
-			//if ( angle > 80 )
-			//{
-			//	vb.AddQuad(
-			//		new Sandbox.Vertex( a, new Vector2( cStep, 0 ), Color.White ),
-			//		new Sandbox.Vertex( b, new Vector2( cStep, uvStepY ), Color.White ),
-			//		new Sandbox.Vertex( c, new Vector2( cStep + uvStepX, uvStepY ), Color.White ),
-			//		new Sandbox.Vertex( d, new Vector2( cStep + uvStepX, 0 ), Color.White )
-			//	);
+			vb.AddQuad(
+				new Sandbox.Vertex( a, nrmlA, tangent, new Vector2( cStep, 0 ) ),
+				new Sandbox.Vertex( b, nrmlA, tangent, new Vector2( cStep, uvStepY ) ),
+				new Sandbox.Vertex( c, nrmlA, tangent, new Vector2( cStep + uvStepX, uvStepY ) ),
+				new Sandbox.Vertex( d, nrmlA, tangent, new Vector2( cStep + uvStepX, 0 ) )
+			);
 
-			//}
-			//else
-			//{
-			//	vb.Add( new Sandbox.Vertex( c, new Vector2( cStep + uvStepX, uvStepY ), Color.White ) );
-			//	vb.Add( new Sandbox.Vertex( d, new Vector2( cStep + uvStepX, 0 ), Color.White ) );
+			angle = Math.Abs( Math2d.Angle3D( nrmlB, nrmlA, a-b ) );
 
-			//	//tris[1].Add( verts.Count - 1 );
-			//	//tris[1].Add( verts.Count - 3 );
-			//	//tris[1].Add( verts.Count - 4 );
-			//	//tris[1].Add( verts.Count - 2 );
-			//	//tris[1].Add( verts.Count - 1 );
-			//	//tris[1].Add( verts.Count - 4 );
-			//}
 		}
 	}
 
