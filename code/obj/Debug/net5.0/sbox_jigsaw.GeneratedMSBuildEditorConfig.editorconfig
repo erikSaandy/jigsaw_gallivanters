@@ -7,4 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = sbox_jigsaw
-build_property.ProjectDir = C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\sbox_jigsaw\code\
+build_property.ProjectDir = C:\Program Files (x86)\Steam\steamapps\common\sbox\addons\sbox_jigsaw\code\

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hUEQXLxmS+kbd9aLGMPc0zzTWkEpNeFE0djffTfiTKH1rfRNHjHs7E/6mgGCLq3sV1XRh2M0b/tK7yULigKPyQ==",
+  "dgSpecHash": "rDXA0lDgGWtSnPuF2rq2uL77OpJmvU8PhzFE3aBUxjAAKX6H48O3u1VIR6b9g7zj8vca7uFgR9gpox6MjI0FlQ==",
   "success": true,
-  "projectFilePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\sbox_jigsaw\\code\\sbox_jigsaw.csproj",
+  "projectFilePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\addons\\sbox_jigsaw\\code\\sbox_jigsaw.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

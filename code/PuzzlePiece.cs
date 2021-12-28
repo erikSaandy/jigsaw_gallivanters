@@ -2,24 +2,54 @@
 using System.Collections.Generic;
 using Sandbox;
 
-partial class PuzzlePiece : Sandbox.ModelEntity
+partial class PuzzlePiece : ModelEntity
 {
 
     [Net] public PuzzleManager Manager { get; private set; }
-
+		
     public PuzzlePiece root;
     public override PuzzlePiece Root => GetRoot();
-    public PuzzlePiece GetRoot() {
+
+	public PuzzlePiece GetRoot() {
         if (root == null) { root = this; }
         return root;
     }
 
-	public PuzzlePiece(PuzzleManager manager)
+	public PuzzlePiece ()
 	{
-		this.Manager = manager;
+
 	}
 
-    public int x, y;
+	public void Spawn(int x, int y, Mesh[] m, PuzzleManager manager)
+	{
+		this.x = x;
+		this.y = y;
+		this.Manager = manager;
+		var model = new ModelBuilder()
+		.AddMeshes( m )
+		.AddCollisionBox( new Vector3( PuzzleGenerator.scale / 2, PuzzleGenerator.scale / 2, PuzzleGenerator.pieceThickness * (PuzzleGenerator.scale / 2) ) )
+		.WithMass( 50 )
+		.WithSurface( "wood" )
+		.Create();
+
+		SetModel( model );
+
+		MoveType = MoveType.Physics;
+		CollisionGroup = CollisionGroup.Interactive;
+		PhysicsEnabled = true;
+		UsePhysicsCollision = true;
+		EnableHideInFirstPerson = true;
+		EnableShadowInFirstPerson = true;
+		SetInteractsAs( CollisionLayer.Solid );
+		AddCollisionLayer( CollisionLayer.Solid );
+		Tags.Add( "PuzzlePiece" );
+		SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
+		EnableAllCollisions = true;
+
+		Health = -1;
+	}
+
+	public int x, y;
     private static float connectionDistance = 0.2f;
 
     public bool connectedLeft, connectedRight, connectedTop, connectedBottom;
@@ -108,14 +138,14 @@ partial class PuzzlePiece : Sandbox.ModelEntity
     private bool GetPieceInDirection(int dirX, int dirY, out PuzzlePiece piece) {
         if( dirX != 0 &&
             x + dirX > 0 && 
-            x + dirX < Manager.puzzleWidth) {
+            x + dirX < Manager.PuzzleWidth) {
             piece = Manager.GetPiece(x + dirX, y);
             return true;
         }
 
         if( dirY != 0 &&
             y + dirY > 0 &&
-            y + dirY < Manager.puzzleHeight) {
+            y + dirY < Manager.PuzzleHeight) {
             piece = Manager.GetPiece(x, y + dirY);
             return true;
         }

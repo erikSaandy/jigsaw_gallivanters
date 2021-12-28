@@ -6,45 +6,58 @@ using Saandy;
 using Sandbox;
 
 
-partial class PuzzleGenerator : Sandbox.Entity
+partial class PuzzleGenerator : Entity
 {
+	public const string m_default = "materials/jigsaw_default.vmat";
+	public const string m_backside = "materials/jigsaw_back.vmat";
+
 	public const int backsideUVTiling = 4;
 	public const float pieceThickness = 0.06f;
+	public const int scale = 32;
 	private const int PipPointCount = 12;
 	private const int BodyPointCount = 12;
 
-
-	public const int scale = 32;
+	[Net] private static bool IsGenerated { get; set; } = false;
 
 	[Net] public static PuzzleGenerator Instance { get; set; }
-	[Net] public Material DefaultImageMat { get; set; }
-	[Net] public Material BacksideMat { get; set; }
-	[Net] public Texture PuzzleImage { get; set; }
+	[Net] public static Material DefaultImageMat { get; set; }
+	[Net] public static Material BacksideMat { get; set; }
+
+	[Net] public static Texture PuzzleImage { get; set; }
+
+	public int width, height;
+	public int maxDimension;
+
+	public float wobbleAmount = 0.15f;
+	[Net] public PieceData[,] pieces { get; set; }
+	public int divisionLevel = 1;
 
 	private static MeshBuilder mesher = null;
+    private static int pieceCount;
 
-    public int divisionLevel = 1;
-    private int pieceCount;
 
-    public int width, height;
-    public int maxDimension;
+    [Net, Predicted] public PuzzleManager CurrentManager { get; set; }
 
-    public float wobbleAmount = 0.15f;
-
-    public PieceData[,] pieces;
-
-    [Net ]public PuzzleManager currentManager { get; set; }
-
-	public void LoadMaterialAttributes()
+	[ClientRpc]
+	public static void LoadMaterialsOnClient()
 	{
+		DefaultImageMat = Material.Load( m_default );
+		BacksideMat = Material.Load( m_backside );
 		PuzzleImage = Texture.Load( "textures/kittens.png" );
-		DefaultImageMat = Material.Load( "materials/jigsaw_default.vmat" );
-		BacksideMat = Material.Load( "materials/jigsaw_back.vmat" );
+	}
+
+	public void LoadMaterialAttributesOnServer()
+	{
+		LoadMaterialsOnClient();
+		Log.Warning( "Load materials" );
+		DefaultImageMat = Material.Load( m_default );
+		BacksideMat = Material.Load( m_backside );
+		PuzzleImage = Texture.Load( "textures/kittens.png" );
 	}
 
     public PuzzleGenerator() {
 		if ( Instance == null ) {
-			LoadMaterialAttributes();
+			LoadMaterialAttributesOnServer();
 			Instance = this;
 		}
 		else if ( Instance != this ) {
@@ -52,7 +65,10 @@ partial class PuzzleGenerator : Sandbox.Entity
 		}
     }
 
-    public void GeneratePuzzle() {	
+    public void GeneratePuzzle() {
+
+		if ( IsGenerated ) { return; }
+
 
 		float t = Time.Now;
 
@@ -62,8 +78,8 @@ partial class PuzzleGenerator : Sandbox.Entity
 		GetDimensions( out pieceCount );
 		pieces = new PieceData[width, height];
 
-		DefaultImageMat.OverrideTexture( "Color", PuzzleImage );
-		currentManager = new PuzzleManager( width, height, DefaultImageMat );
+		//DefaultImageMat.OverrideTexture( "Color", PuzzleImage );
+		CurrentManager = new PuzzleManager( width, height, m_default, "" );
 
 		//Iterate through the array "randomly".
 		int p = 37;
@@ -75,6 +91,8 @@ partial class PuzzleGenerator : Sandbox.Entity
 			q = (q + p) % s;
 		}
 
+		IsGenerated = true;
+
 		//GeneratePiece( Rand.Int( 0, width - 1 ), Rand.Int( 0, height - 1 ) );
 
 		//GeneratePiece( 0, 0 );
@@ -84,8 +102,8 @@ partial class PuzzleGenerator : Sandbox.Entity
 	private void GetDimensions( out int pieceCount )
 	{
 
-		int pictureWidth = PuzzleImage.Width;
-		int pictureHeight = PuzzleImage.Height;
+		int pictureWidth = PuzzleImage == null? 10 : PuzzleImage.Width;
+		int pictureHeight = PuzzleImage == null ? 10 : PuzzleImage.Height;
 
 		int gcf = Math2d.GetGreatestCommonFactor( pictureWidth, pictureHeight );
 
@@ -106,82 +124,60 @@ partial class PuzzleGenerator : Sandbox.Entity
 
 	}
 
-	public void GeneratePiece(int x, int y) {
+	public void GeneratePiece( int x, int y ) {
 
-        int wobbleLeft = x == 0 ? 0 : 1;
-        int wobbleRight = x == width - 1 ? 0 : 1;
-        int wobbleBottom = y == 0 ? 0 : 1;
-        int wobbleTop = y == height - 1 ? 0 : 1;
+		int wobbleLeft = x == 0 ? 0 : 1;
+		int wobbleRight = x == width - 1 ? 0 : 1;
+		int wobbleBottom = y == 0 ? 0 : 1;
+		int wobbleTop = y == height - 1 ? 0 : 1;
 
-        PieceData pieceData = new PieceData(
-            x, y,
+		PieceData pieceData = new PieceData(
+			x, y,
 
-            new Vector2(
-				(x * scale) + (GetWobbleAt(x, y) * wobbleLeft), 
-				(y * scale) + (GetWobbleAt(x, y) * wobbleBottom) 
+			new Vector2(
+				(x * scale) + (GetWobbleAt( x, y ) * wobbleLeft),
+				(y * scale) + (GetWobbleAt( x, y ) * wobbleBottom)
 			),
-            new Vector2(
-				(x * scale) + (GetWobbleAt(x, y + 1) * wobbleLeft), 
-				(y * scale) + scale + (GetWobbleAt(x, y + 1) * wobbleTop)
+			new Vector2(
+				(x * scale) + (GetWobbleAt( x, y + 1 ) * wobbleLeft),
+				(y * scale) + scale + (GetWobbleAt( x, y + 1 ) * wobbleTop)
 			),
-            new Vector2(
-				(x * scale) + scale + (GetWobbleAt(x + 1, y + 1) * wobbleRight), 
-				(y * scale) + scale + (GetWobbleAt(x + 1, y + 1) * wobbleTop)
+			new Vector2(
+				(x * scale) + scale + (GetWobbleAt( x + 1, y + 1 ) * wobbleRight),
+				(y * scale) + scale + (GetWobbleAt( x + 1, y + 1 ) * wobbleTop)
 			),
-            new Vector2(
-				(x * scale) + scale + (GetWobbleAt(x + 1, y) * wobbleRight), 
-				(y * scale) + (GetWobbleAt(x + 1, y) * wobbleBottom)
+			new Vector2(
+				(x * scale) + scale + (GetWobbleAt( x + 1, y ) * wobbleRight),
+				(y * scale) + (GetWobbleAt( x + 1, y ) * wobbleBottom)
 			),
 
-            wobbleLeft == 0,
-            wobbleRight == 0,
-            wobbleTop == 0,
-            wobbleBottom == 0
-        );
+			wobbleLeft == 0,
+			wobbleRight == 0,
+			wobbleTop == 0,
+			wobbleBottom == 0
+		);
 
 
-        GetBodyPoints(ref pieceData);
+		GetBodyPoints( ref pieceData );
 
-		EarClipping.Process(pieceData.polygon.contour, out pieceData.tris);
+		EarClipping.Process( pieceData.polygon.contour, out pieceData.tris );
 
-		Vector2 pos = new Vector2(x, y) * scale;           
-
-		PuzzlePiece pieceEntity = new PuzzlePiece( currentManager );
-		
-		// TEMP
-		pieceEntity.Position = pos;
-		pieceEntity.Position += Vector3.Up * 512;
+		Vector3 pos = new Vector3( x, y, 0 ) * scale;
 
 		// Mesh building //
-		
+
 		mesher.GenerateMesh( pieceData, pos, out Mesh[] m );
 
-		var model = new ModelBuilder()
-		.AddMeshes( m )
-		.AddCollisionBox( new Vector3( scale / 2, scale / 2, pieceThickness * (scale / 2) ) )
-		.WithMass( 50 )
-		.WithSurface( "wood" )
-		.Create();
+		PuzzlePiece pieceEntity = new PuzzlePiece();
+		pieceEntity.Spawn( x, y, m, CurrentManager );
 
-		//for ( int i = 0; i < 4; i++ )
-		//{
-		//	bool isEdge = pieceData.SideIsOnEdge( i );
-		//	Vector2 sideDir = pieceData.GetSideNormal( i );
-
-		//	// if pip goes out...
-		//	if (!isEdge && pieces[pieceData.x + (int)sideDir.x, pieceData.y + (int)sideDir.y] == null ) {
-		//		model.AddCollisionBox( new Vector3( 0.2f, 0.2f, pieceThickness / 2 ) * scale, (sideDir * scale / 2) );
-		//	}
-		//}
-
-		pieceEntity.SetModel( model );
-		pieceEntity.SetupPhysicsFromModel( PhysicsMotionType.Dynamic );
+		pieceEntity.Position = pos += Vector3.Up * 512;
 
 		//pieceEntity.Rotation = Rotation.RotateAroundAxis( Vector3.Up, 180 );
 
-        pieceEntity.x = x;
-        pieceEntity.y = y;
-        currentManager.AddPiece(pieceEntity, x, y);
+		Log.Warning( "CURRENT MANAGER IS VALID : " );
+		Log.Warning( CurrentManager != null );
+        CurrentManager.AddPiece(pieceEntity, x, y);
         pieces[x, y] = pieceData;
 
     }
@@ -306,7 +302,7 @@ partial class PuzzleGenerator : Sandbox.Entity
 
 }
 
-public class PieceData {
+public partial class PieceData {
 
     public int x, y;
 
@@ -394,14 +390,18 @@ public class MeshBuilder
 
 		AddTrim( position, piece );
 
-		Mesh m1 = new Mesh( PuzzleGenerator.Instance.currentManager.ImageMat );
-		m1.Material = PuzzleGenerator.Instance.currentManager.ImageMat;
+
+		Material mat = Material.Load( PuzzleGenerator.m_default );
+		Mesh m1 = new Mesh( mat );
+		m1.Material = mat;
 		m1.SetBounds( -PuzzleGenerator.scale / 2, PuzzleGenerator.scale / 2 );
 		m1.CreateBuffers( vb, true );
 		m1.SetIndexRange( 0, mesh1VertexCount );
 
-		Mesh m2 = new Mesh( PuzzleGenerator.Instance.BacksideMat );
-		m2.Material = PuzzleGenerator.Instance.BacksideMat;
+
+		mat = Material.Load( PuzzleGenerator.m_backside );
+		Mesh m2 = new Mesh( mat );
+		m2.Material = mat;
 		m2.SetBounds( -PuzzleGenerator.scale / 2, PuzzleGenerator.scale / 2 );
 		m2.CreateBuffers( vb, true );
 		m2.SetIndexRange( mesh1VertexCount, vertexCount );
@@ -508,8 +508,8 @@ public class MeshBuilder
 
 			a = d;
 			b = c;
-			c = ( Vector3)piece.polygon.contour.points[Math2d.ClampListIndex( i + 1, contourCount )] - (Vector3)position + thicknessOffset;
-			d = ( Vector3)piece.polygon.contour.points[Math2d.ClampListIndex( i + 1, contourCount )] - (Vector3)position - thicknessOffset;
+			c = ( Vector3 )piece.polygon.contour.points[Math2d.ClampListIndex( i + 1, contourCount )] - (Vector3)position + thicknessOffset;
+			d = ( Vector3 )piece.polygon.contour.points[Math2d.ClampListIndex( i + 1, contourCount )] - (Vector3)position - thicknessOffset;
 
 			tangent = (d - a);
 			Vector3 nrmlA = Vector3.Cross( tangent, (a - b) );

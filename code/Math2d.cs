@@ -12,6 +12,11 @@ namespace Saandy {
         public const float Deg2Rad = PI / 180f;
         public const float Rad2Deg = 180f / PI;
 
+		public static float SolveVerticalLaunchSpeed( float intendedApexHeight, float gravity = 9.81f )
+		{
+			return (float)Math.Sqrt( 2f * gravity * intendedApexHeight );
+		}
+
         public static Vector2 RotateByAngle(Vector2 vector, float angle) {
             float a = (float)Math.Atan2(vector.y, vector.x);
             a -= angle * Deg2Rad;
