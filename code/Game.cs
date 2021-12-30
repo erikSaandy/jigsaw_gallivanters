@@ -45,7 +45,7 @@ public partial class Game : Sandbox.Game
 	public override void ClientJoined( Client cl )
 	{
 		base.ClientJoined( cl );
-		var player = new Player();
+		var player = new JigsawPlayer();
 		player.Respawn();
 
 		cl.Pawn = player;
@@ -58,7 +58,7 @@ public partial class Game : Sandbox.Game
 
 	public override void DoPlayerNoclip( Client player )
 	{
-		if ( player.Pawn is Player basePlayer )
+		if ( player.Pawn is JigsawPlayer basePlayer )
 		{
 			if ( basePlayer.DevController is NoclipController )
 			{
