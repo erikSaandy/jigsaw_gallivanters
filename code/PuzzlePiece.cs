@@ -30,6 +30,7 @@ partial class PuzzlePiece : Prop
 	{
 		this.X = x;
 		this.Y = y;
+		Index = Math2d.ArrayIndex( x, y, ExplorerGame.Game.PieceCountX, ExplorerGame.Game.PieceCountY );
 	}
 
 	[Event.Tick]

@@ -28,6 +28,8 @@ partial class Explorer
 	{
 		Log.Error( ExplorerGame.Game.PieceCountX + ", " + ExplorerGame.Game.PieceCountY );
 
+		//TODO: add piecemodels to specific index in array instead of in order. (they're generated out of order.)
+
 		for ( int x = 0; x < ExplorerGame.Game.PieceCountX; x++ )
 		{
 			for ( int y = 0; y < ExplorerGame.Game.PieceCountY; y++ )
