@@ -1,0 +1,41 @@
+{
+  "Title": "Jigsaw Gallivanters",
+  "Type": "game",
+  "Org": "saandy",
+  "Ident": "jigsaw_gallivanters",
+  "Tags": "",
+  "Schema": 1,
+  "HasAssets": true,
+  "AssetsPath": "",
+  "ResourcePaths": [
+    "/sounds/*",
+    "/fonts/*",
+    "/ui/*"
+  ],
+  "HasCode": true,
+  "CodePath": "/code/",
+  "RootNamespace": null,
+  "Metadata": {
+    "MaxPlayers": 64,
+    "MinPlayers": 1,
+    "GameNetworkType": "Multiplayer",
+    "MapSelect": "Official",
+    "MapList": [
+      "local.jg_concept"
+    ],
+    "RankType": "None",
+    "PerMapRanking": false,
+    "LeaderboardType": "None",
+    "ProjectTemplate": null,
+    "GameCategory": "Social",
+    "ControlModes": {
+      "Keyboard": true
+    },
+    "ParentPackage": "",
+    "Compiler": {
+      "RootNamespace": "Sandbox",
+      "DefineConstants": "SANDBOX;ADDON;DEBUG",
+      "NoWarn": "1701;1702;1591;"
+    }
+  }
+}

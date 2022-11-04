@@ -1,0 +1,9 @@
+This is some example text that I will use to test the note text system wow cool right?
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Quisque non suscipit nibh, ut scelerisque nibh. Proin pulvinar sollicitudin massa imperdiet posuere.
+Duis dapibus laoreet urna hendrerit pellentesque.
+Cras iaculis nisi sapien, et scelerisque turpis egestas in.
+Praesent tempor pellentesque nulla vel accumsan.
+Integer facilisis convallis nunc, eu condimentum dui ornare accumsan.
+Vestibulum eleifend libero eu facilisis vulputate.
+Mauris elementum accumsan orci, sit amet ornare nunc maximus a.

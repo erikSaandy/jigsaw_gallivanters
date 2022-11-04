@@ -1,0 +1,29 @@
+School lockers: https://sketchfab.com/3d-models/locker-41f55ae53fca41c3b861cebe5244b5dd#download
+
+My Publicly available Models
+Pumpkin: https://sketchfab.com/3d-models/big-pumpkin-pbr-6379a27182aa4bce8ae38465834cb068
+Key: https://sketchfab.com/3d-models/ornate-brass-key-1ddfbf68cf454980b14bb10910e4ba37
+Teacher's Desk: https://sketchfab.com/3d-models/defence-against-the-dark-arts-teachers-desk-428d07507c624b2f88b0c61cd302b881
+Barrel: https://sketchfab.com/3d-models/wooden-barrel-8810a9aad4f546a28fe5cda1e429758e
+Table: https://sketchfab.com/3d-models/great-hall-table-195b55e4503f425aade86c2be175f9c1
+Lantern: https://sketchfab.com/3d-models/hogwarts-wall-lantern-3cfce72d4ebd4b098d6b4b523ee4b009
+Wardrobe: https://sketchfab.com/3d-models/boggart-wardrobe-978dc3fe08bf4ebab55ee1b12ec471a9
+
+Created during the jam:
+The Frame model, and I generated absurd pictures with Dall-E.
+Note model
+All UI
+All code (a bunch repurposed from core and Facepunch Github)
+saandy.haunted_oddity map
+
+Remixed sounds: 
+door_close
+door_knocking
+door_locked
+door_unlock
+pickup_key
+note_close
+note_open
+note_open_simple
+
+I also used various assets from S&box core and Facepunch Github.
