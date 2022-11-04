@@ -4,12 +4,6 @@ using Saandy;
 partial class Explorer
 {
 
-	public VertexBuffer vb;
-
-	[Net, Predicted]
-	public PuzzlePiece Current { get; set; } = null;
-
-
 	/// <summary>
 	/// This should be called somewhere in your player's tick to allow them to use entities
 	/// </summary>
@@ -20,44 +14,37 @@ partial class Explorer
 		//// This is serverside only
 		if ( !Host.IsServer ) return;
 
-
-		/// TODO: PREDICTION IN PUZZLEPIECE PROP. GENERATE MESH AND SHIT IN OUTSIDE LOOP (PUZZLEGENERATOR etc)
-
 		// Turn prediction off
 		using ( Prediction.Off() )
 		{
 			if ( Input.Pressed( InputButton.Flashlight ) )
 			{
-				SpawnServer();
+				SpawnPiecesServer();
 			}
 		}
 	}
 
-	private void SpawnServer()
+	private void SpawnPiecesServer()
 	{
+		Log.Error( ExplorerGame.Game.PieceCountX + ", " + ExplorerGame.Game.PieceCountY );
 
-		var tr = Trace.Ray( EyePosition, EyePosition + (EyeRotation.Forward * 512) )
-				.Ignore( this )
-				.Size( 10 )
-				.Run();
-
-
-		if ( tr.Hit )
+		for ( int x = 0; x < ExplorerGame.Game.PieceCountX; x++ )
 		{
-			Vector3 spawnPos = tr.EndPosition + Vector3.Up * 32;
-			DebugOverlay.Line( EyePosition, tr.EndPosition, 5 );
-			DebugOverlay.Line( tr.EndPosition, spawnPos, 5 );
+			for ( int y = 0; y < ExplorerGame.Game.PieceCountY; y++ )
+			{
+				var ent = new PuzzlePiece(x, y);
+				ent.GenerateServer();
+				ent.Position = new Vector3( ent.X * ExplorerGame.PieceScale, ent.Y * ExplorerGame.PieceScale, 64 );
+				ent.Rotation = Rotation.RotateAroundAxis( Vector3.Up, 180 );
+				SpawnPieceClient(ent);
 
-			var ent = new PuzzlePiece( spawnPos );
-			ent.GenerateServer();
-			SpawnClient( ent );
-
+			}
 		}
 
 	}
 
 	[ClientRpc]
-	private void SpawnClient( PuzzlePiece ent )
+	private void SpawnPieceClient( PuzzlePiece ent )
 	{
 		ent.GenerateClient();
 	}

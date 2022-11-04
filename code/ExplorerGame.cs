@@ -21,13 +21,14 @@ public partial class ExplorerGame : Sandbox.Game
 
 	public ExplorerGame()
 	{
+
+		PuzzleHelperInit();
+
 		if ( IsClient )
 		{
 			// Create the HUD
 			Hud = new ExplorerHud();
 			Hud.HudInit();
-
-			PuzzleHelperInit();
 		}
 	
 		if( IsServer )

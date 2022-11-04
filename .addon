@@ -10,7 +10,8 @@
   "ResourcePaths": [
     "/sounds/*",
     "/fonts/*",
-    "/ui/*"
+    "/ui/*",
+    "/textures/*"
   ],
   "HasCode": true,
   "CodePath": "/code/",

@@ -91,7 +91,20 @@ namespace Saandy {
             x = i % w;
         }
 
-        public static void DrawCircle(Vector2 p, float r, Color c, float duration = 5f) {
+		/// <summary>
+		/// 0 based array, width(0,1,2,3) = 4
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
+		/// <returns></returns>
+		public static int ArrayIndex( int x, int y, int width, int height )
+		{
+			return (y * width) + x;
+		}
+
+		public static void DrawCircle(Vector2 p, float r, Color c, float duration = 5f) {
             Vector2 dO = new Vector2(0, 1);
             Vector2 dC = new Vector2();
 

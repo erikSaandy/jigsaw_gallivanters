@@ -33,11 +33,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Dropbox\\sbox\\procedural_testing\\code\\procedural_testing.csproj",
-      "projectName": "procedural_testing",
-      "projectPath": "D:\\Dropbox\\sbox\\procedural_testing\\code\\procedural_testing.csproj",
+      "projectUniqueName": "D:\\Dropbox\\sbox\\jigsaw_gallivanters\\code\\jigsaw_gallivanters.csproj",
+      "projectName": "jigsaw_gallivanters",
+      "projectPath": "D:\\Dropbox\\sbox\\jigsaw_gallivanters\\code\\jigsaw_gallivanters.csproj",
       "packagesPath": "C:\\Users\\SandPile\\.nuget\\packages\\",
-      "outputPath": "D:\\Dropbox\\sbox\\procedural_testing\\code\\obj\\",
+      "outputPath": "D:\\Dropbox\\sbox\\jigsaw_gallivanters\\code\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

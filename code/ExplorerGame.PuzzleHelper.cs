@@ -2,50 +2,52 @@
 using Sandbox.UI.Construct;
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 public partial class ExplorerGame : Sandbox.Game
 {
 
-	public Model PieceModel { get; set; } = null;
+	//public Model PieceModel { get; set; } = null;
 
-	public readonly float PieceSize = 64;
+	public IList<Model> PieceModels { get; set; } = null;
 
-	public readonly float PieceThickness = 8;
+	public Material BacksideMaterial { get; set; } = null;
+	public Material PuzzleImageMaterial { get; set; } = null;
+	public Texture PuzzleImageTexture { get; set; } = null;
 
-	public Material PieceMaterial { get; set; } = null;
+	[Net, Predicted]
+	public int PieceCountX { get; set; } = 0;
+
+	[Net, Predicted]
+	public int PieceCountY { get; set; } = 0;
 
 	public void PuzzleHelperInit()
 	{
 
-		Vector3 pieceDimensions = new Vector3( PieceSize, PieceSize, PieceThickness );
+		if ( IsClient )
+		{
 
-		VertexBuffer vb = new VertexBuffer();
-		vb.Init( true );
-		vb.Clear();
+			SetNewPuzzleTexture( Texture.Load( FileSystem.Mounted, "textures/kittens.png" ) );
+			GeneratePuzzle();
+		}
 
-		vb.AddCube( Vector2.Zero, pieceDimensions, Rotation.Identity, Color.Blue );
+		if( IsServer )
+		{
+			Texture t = Texture.Load( FileSystem.Mounted, "textures/kittens.png" );
+			GetDimensions( t, out int pc );
+			Log.Error( "DIM: " + PieceCountX + "," + PieceCountY );
+		}
 
-		PieceMaterial = Material.Load( "materials/0_dirt.vmat" );
-		Mesh m = new Mesh( PieceMaterial );
-		//m.SetBounds( -Vector2.One * 32, Vector2.One * 32 );
-		m.CreateBuffers( vb, true );
+	}
 
-		// // //
-
-		Log.Error( m.VertexCount );
-
-		// // //
-		PieceModel = new ModelBuilder()
-		.AddMesh( m )
-		.AddCollisionBox( PieceSize / 2 )
-		.WithMass( 50 )
-		.WithSurface( "wood" )
-		.Create();
-
-		Log.Error( "generated model." );
+	public void SetNewPuzzleTexture( Texture t )
+	{
+		PuzzleImageTexture = t;
+		PuzzleImageMaterial = Material.Load( "materials/jigsaw/default_image/jigsaw_default.vmat" );
+		PuzzleImageMaterial.OverrideTexture("Color", t );
+		BacksideMaterial = Material.Load( "materials/jigsaw/jigsaw_back/jigsaw_back.vmat" );
 	}
 
 }

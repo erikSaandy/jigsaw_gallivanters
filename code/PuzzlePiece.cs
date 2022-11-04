@@ -1,18 +1,19 @@
 ﻿using Sandbox;
 using System;
 using System.Linq;
+using Saandy;
 
 namespace Sandbox;
 
 partial class PuzzlePiece : Prop
 {
 	[Net]
-	public int x { get; set; } = 0;
-	[Net]
-	public int y { get; set; } = 0;
+	public int Index { get; private set; } = 0;
 
 	[Net]
-	private bool Generated { get; set; } = false;
+	public int X { get; set; } = 0;
+	[Net]
+	public int Y { get; set; } = 0;
 
 	/// <summary>
 	/// Called when the entity is first created 
@@ -25,9 +26,10 @@ partial class PuzzlePiece : Prop
 
 	public PuzzlePiece() : base() { }
 
-	public PuzzlePiece(Vector3 pos ) : base()
+	public PuzzlePiece(int x, int y) : base()
 	{
-		this.Position = pos;
+		this.X = x;
+		this.Y = y;
 	}
 
 	[Event.Tick]
@@ -36,28 +38,34 @@ partial class PuzzlePiece : Prop
 
 	}
 
+	/// <summary>
+	/// Generate model mesh and physics.
+	/// </summary>
+	public void GenerateServer()
+	{
+		//this.SetModel( "models/sbox_props/watermelon/watermelon.vmdl" );
+		Vector3 dimensions = new Vector3( ExplorerGame.PieceScale / 2, ExplorerGame.PieceScale / 2, (ExplorerGame.PieceScale * ExplorerGame.PieceThickness) / 2 );
+		SetupPhysicsFromOBB( PhysicsMotionType.Dynamic, -dimensions, dimensions );
+		PhysicsEnabled = true;
+		UsePhysicsCollision = true;
+
+		GenerateClient();
+	}
+
+
+	[ClientRpc]
 	public void GenerateClient()
 	{
 		//this.SetModel( "models/sbox_props/watermelon/watermelon.vmdl" );
 
-		this.Model = ExplorerGame.Game.PieceModel;
-		Log.Error( "model: " + ExplorerGame.Game.PieceModel.ToString() );
+		Log.Error( Index );
+		this.Model = ExplorerGame.Game.PieceModels[Index];
+		//Log.Error( "model: " + ExplorerGame.Game.PieceModel.ToString() );
 		//SetupPhysicsFromModel( PhysicsMotionType.Dynamic );
-		Vector3 dimensions = new Vector3( ExplorerGame.Game.PieceSize / 2, ExplorerGame.Game.PieceSize / 2, ExplorerGame.Game.PieceThickness / 2 );
+		Vector3 dimensions = new Vector3( ExplorerGame.PieceScale / 2, ExplorerGame.PieceScale / 2,  (ExplorerGame.PieceScale * ExplorerGame.PieceThickness) / 2 );
 		SetupPhysicsFromOBB( PhysicsMotionType.Dynamic, -dimensions, dimensions );
 		PhysicsEnabled = true;
 		UsePhysicsCollision = true;
 	}
-
-	public void GenerateServer()
-	{
-		//this.SetModel( "models/sbox_props/watermelon/watermelon.vmdl" );
-		Log.Error( "server" );
-		Vector3 dimensions = new Vector3( ExplorerGame.Game.PieceSize / 2, ExplorerGame.Game.PieceSize / 2, ExplorerGame.Game.PieceThickness / 2 );
-		SetupPhysicsFromOBB( PhysicsMotionType.Dynamic, -dimensions, dimensions );
-		PhysicsEnabled = true;
-		UsePhysicsCollision = true;
-	}
-
 
 }
