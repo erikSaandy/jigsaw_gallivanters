@@ -62,7 +62,6 @@ partial class PuzzlePiece : Prop
 		Log.Error( Index );
 		this.Model = ExplorerGame.Game.PieceModels[Index];
 		//Log.Error( "model: " + ExplorerGame.Game.PieceModel.ToString() );
-		//SetupPhysicsFromModel( PhysicsMotionType.Dynamic );
 		Vector3 dimensions = new Vector3( ExplorerGame.PieceScale / 2, ExplorerGame.PieceScale / 2,  (ExplorerGame.PieceScale * ExplorerGame.PieceThickness) / 2 );
 		SetupPhysicsFromOBB( PhysicsMotionType.Dynamic, -dimensions, dimensions );
 		PhysicsEnabled = true;

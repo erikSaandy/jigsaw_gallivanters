@@ -148,8 +148,8 @@ public partial class ExplorerGame : Sandbox.Game
 		mesher.GenerateMesh( pieceData, pos, out Mesh[] m );
 
 		// Set materials
-		m[0].Material = ExplorerGame.Game.BacksideMaterial;
-		m[1].Material = ExplorerGame.Game.PuzzleImageMaterial;
+		m[0].Material = PuzzleImageMaterial;
+		m[1].Material = BacksideMaterial;
 
 		// Create models
 		PieceModels.Add( new ModelBuilder()

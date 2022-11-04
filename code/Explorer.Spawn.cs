@@ -36,8 +36,8 @@ partial class Explorer
 			{
 				var ent = new PuzzlePiece(x, y);
 				ent.GenerateServer();
-				ent.Position = new Vector3( ent.X * ExplorerGame.PieceScale, ent.Y * ExplorerGame.PieceScale, 64 );
-				ent.Rotation = Rotation.RotateAroundAxis( Vector3.Up, 180 );
+				ent.Position = new Vector3( ent.X * ExplorerGame.PieceScale + (8 * ent.X), ent.Y * ExplorerGame.PieceScale + (8 * ent.Y), 64 );
+				ent.Rotation = Rotation.RotateAroundAxis( Vector3.Up, 270 );
 				SpawnPieceClient(ent);
 
 			}
