@@ -1,0 +1,5 @@
+D:\Dropbox\sbox\halloween_explorer\code\obj\Debug\halloween_explorer.csproj.AssemblyReference.cache
+D:\Dropbox\sbox\halloween_explorer\code\obj\Debug\halloween_explorer.GeneratedMSBuildEditorConfig.editorconfig
+D:\Dropbox\sbox\halloween_explorer\code\obj\Debug\halloween_explorer.AssemblyInfoInputs.cache
+D:\Dropbox\sbox\halloween_explorer\code\obj\Debug\halloween_explorer.AssemblyInfo.cs
+D:\Dropbox\sbox\halloween_explorer\code\obj\Debug\halloween_explorer.csproj.CoreCompileInputs.cache

@@ -17,8 +17,8 @@
   "libraries": {
     "base/1.0.0": {
       "type": "project",
-      "path": "../../base/code/base.csproj",
-      "msbuildProject": "../../base/code/base.csproj"
+      "path": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\addons\\base\\code\\base.csproj",
+      "msbuildProject": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\addons\\base\\code\\base.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -33,11 +33,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\addons\\sbox_jigsaw\\code\\sbox_jigsaw.csproj",
-      "projectName": "sbox_jigsaw",
-      "projectPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\addons\\sbox_jigsaw\\code\\sbox_jigsaw.csproj",
+      "projectUniqueName": "D:\\Dropbox\\sbox\\procedural_testing\\code\\procedural_testing.csproj",
+      "projectName": "procedural_testing",
+      "projectPath": "D:\\Dropbox\\sbox\\procedural_testing\\code\\procedural_testing.csproj",
       "packagesPath": "C:\\Users\\SandPile\\.nuget\\packages\\",
-      "outputPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\addons\\sbox_jigsaw\\code\\obj\\",
+      "outputPath": "D:\\Dropbox\\sbox\\procedural_testing\\code\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -87,7 +87,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "jigsawgallivanters": {
+    "halloween_explorer": {
       "commandName": "Executable",
-      "executablePath": "D:\\Steam Library\\steamapps\\common\\sbox\\sbox.exe",
-      "commandLineArgs": "\u002Bdeveloper -w 1920 -h 1080 -noassert -tools"
+      "executablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\sbox.exe",
+      "commandLineArgs": "\u002Bdeveloper 1 -w 1920 -h 1080 -noassert -tools"
     }
   }
 }

@@ -1,0 +1,51 @@
+NoteReader {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	top: 0px;
+	width: 100%;
+	opacity: 0;
+	font-family: SourceSansPro;
+	font-weight: bold;
+	color: black;
+
+
+	.background {
+		position: absolute;
+		left: 50%;
+		top: 10%;
+	}
+
+	.graphic {
+		position: static;
+		width: 110%;
+		height: 110%;
+		left: 0px;
+		right: 0px;
+		opacity: 1;
+		color: white;
+		background-color: rgba(0,255,0,0);
+	}
+
+	.text {
+		position: absolute;
+		left: 0px;
+		right: 0px;
+		top: 40px;
+		bottom: 0px;
+		margin: 70px;
+		width: 50%;
+		transform: translate(40%, 0px);
+		font-size: 20px;
+	}
+
+	&.open {
+		opacity: 1;
+		transition: all 0.0s ease-out;
+	}
+
+	&.close {
+		opacity: 0;
+		transition: all 0.3s ease-out;
+	}
+}

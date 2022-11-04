@@ -1,5 +1,0 @@
-C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\sbox_jigsaw\code\obj\Debug\net5.0\sbox_jigsaw.csproj.AssemblyReference.cache
-C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\sbox_jigsaw\code\obj\Debug\net5.0\sbox_jigsaw.GeneratedMSBuildEditorConfig.editorconfig
-C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\sbox_jigsaw\code\obj\Debug\net5.0\sbox_jigsaw.AssemblyInfoInputs.cache
-C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\sbox_jigsaw\code\obj\Debug\net5.0\sbox_jigsaw.AssemblyInfo.cs
-C:\Program Files (x86)\Steam\steamapps\common\sbox\Addons\sbox_jigsaw\code\obj\Debug\net5.0\sbox_jigsaw.csproj.CoreCompileInputs.cache

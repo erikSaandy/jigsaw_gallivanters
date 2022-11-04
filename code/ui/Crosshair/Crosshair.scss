@@ -1,0 +1,22 @@
+Crosshair {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 1;
+
+    .background {
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        background-color: gray;
+        border-radius: 50%;
+    }
+
+    .crosshair {
+        opacity: 1;
+    }
+}
