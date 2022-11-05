@@ -11,10 +11,8 @@ using Saandy;
 
 public partial class ExplorerGame : Sandbox.Game
 {
-	public static readonly string m_default = "materials/jigsaw_default.vmat";
-	public static readonly string m_backside = "materials/jigsaw_back.vmat";
 
-	public static readonly int BacksideUVTiling = 4;
+	public static readonly int BacksideUVTiling = 8;
 	public static readonly float PieceThickness = 0.06f;
 	public static readonly int PieceScale = 32;
 	private static readonly int PipPointCount = 12;
@@ -43,9 +41,6 @@ public partial class ExplorerGame : Sandbox.Game
 
 		if ( IsGenerated ) { return; }
 
-		if ( PieceModels == null ) { PieceModels = new List<Model>(); }
-		PieceModels.Clear();
-
 
 		float t = Time.Now;
 
@@ -53,7 +48,9 @@ public partial class ExplorerGame : Sandbox.Game
             mesher = new MeshBuilder();
 
 		GetDimensions( PuzzleImageTexture, out pieceCount );
+
 		PieceData = new PieceData[PieceCountX, PieceCountY];
+		PieceModels = new Model[pieceCount];
 
 		//DefaultImageMat.OverrideTexture( "Color", PuzzleImage );
 
@@ -98,7 +95,7 @@ public partial class ExplorerGame : Sandbox.Game
 		}
 
 		maxDimension = ExplorerGame.Game.PieceCountX > ExplorerGame.Game.PieceCountY ? ExplorerGame.Game.PieceCountX : ExplorerGame.Game.PieceCountY;
-		pieceCount = ExplorerGame.Game.PieceCountX * ExplorerGame.Game.PieceCountY;
+		pieceCount = PieceCountX * PieceCountY;
 
 		Log.Error( "popopo " + ExplorerGame.Game.PieceCountX + ", " + ExplorerGame.Game.PieceCountY );
 	}
@@ -144,21 +141,22 @@ public partial class ExplorerGame : Sandbox.Game
 
 		// Mesh building //
 
-		Vector3 pos = new Vector3( x, y, 0 ) * PieceScale;
+		Vector3 pos = new Vector3( x, y ) * PieceScale;
 		mesher.GenerateMesh( pieceData, pos, out Mesh[] m );
 
 		// Set materials
 		m[0].Material = PuzzleImageMaterial;
 		m[1].Material = BacksideMaterial;
 
+		int index = Math2d.ArrayIndex( x, y, PieceCountX, PieceCountY );
+
 		// Create models
-		PieceModels.Add( new ModelBuilder()
+		PieceModels[index] = new ModelBuilder()
 			.AddMeshes( m )
 			.AddCollisionBox( new Vector3( Scale / 2, PieceScale / 2, PieceThickness / 2 ) )
 			.WithMass( 50 )
 			.WithSurface( "wood" )
-			.Create()
-		);
+			.Create();
 
 		// Add to piece data for reference from subsequent puzzle pieces.
 		PieceData[x, y] = pieceData;

@@ -30,18 +30,30 @@ partial class Explorer
 
 		//TODO: add piecemodels to specific index in array instead of in order. (they're generated out of order.)
 
-		for ( int x = 0; x < ExplorerGame.Game.PieceCountX; x++ )
+		int l = ExplorerGame.Game.PieceCountX * ExplorerGame.Game.PieceCountY;
+		for ( int i = 0; i < l; i++ )
 		{
-			for ( int y = 0; y < ExplorerGame.Game.PieceCountY; y++ )
-			{
-				var ent = new PuzzlePiece(x, y);
-				ent.GenerateServer();
-				ent.Position = new Vector3( ent.X * ExplorerGame.PieceScale + (8 * ent.X), ent.Y * ExplorerGame.PieceScale + (8 * ent.Y), 64 );
-				ent.Rotation = Rotation.RotateAroundAxis( Vector3.Up, 270 );
-				SpawnPieceClient(ent);
+			Math2d.FlattenedArrayIndex( i, ExplorerGame.Game.PieceCountX, out int x, out int y ); 
+			var ent = new PuzzlePiece( x, y );
+			ent.GenerateServer();
 
-			}
+			float spacing = 0;
+			ent.Position = new Vector3( ent.X * ExplorerGame.PieceScale + (spacing * ent.X), ent.Y * ExplorerGame.PieceScale + (spacing * ent.Y), 64 );
+			SpawnPieceClient(ent);
 		}
+
+		//for ( int x = 0; x < ExplorerGame.Game.PieceCountX; x++ )
+		//{
+		//	for ( int y = 0; y < ExplorerGame.Game.PieceCountY; y++ )
+		//	{
+		//		var ent = new PuzzlePiece(x, y);
+		//		ent.GenerateServer();
+		//		ent.Position = new Vector3( ent.X * ExplorerGame.PieceScale + (8 * ent.X), ent.Y * ExplorerGame.PieceScale + (8 * ent.Y), 64 );
+		//		ent.Rotation = Rotation.RotateAroundAxis( Vector3.Up, 270 );
+		//		SpawnPieceClient(ent);
+
+		//	}
+		//}
 
 	}
 

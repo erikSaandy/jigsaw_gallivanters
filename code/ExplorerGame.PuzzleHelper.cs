@@ -11,7 +11,7 @@ public partial class ExplorerGame : Sandbox.Game
 
 	//public Model PieceModel { get; set; } = null;
 
-	public IList<Model> PieceModels { get; set; } = null;
+	public Model[] PieceModels { get; set; } = null;
 
 	public Material BacksideMaterial { get; set; } = null;
 	public Material PuzzleImageMaterial { get; set; } = null;
@@ -29,7 +29,7 @@ public partial class ExplorerGame : Sandbox.Game
 		if ( IsClient )
 		{
 
-			SetNewPuzzleTexture( Texture.Load( FileSystem.Mounted, "textures/kittens.png" ) );
+			SetNewPuzzleTexture( Texture.Load( FileSystem.Mounted, "textures/sbox.png" ) );
 			GeneratePuzzle();
 		}
 

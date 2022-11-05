@@ -46,6 +46,7 @@ partial class PuzzlePiece : Prop
 	{
 		//this.SetModel( "models/sbox_props/watermelon/watermelon.vmdl" );
 		Vector3 dimensions = new Vector3( ExplorerGame.PieceScale / 2, ExplorerGame.PieceScale / 2, (ExplorerGame.PieceScale * ExplorerGame.PieceThickness) / 2 );
+		Log.Error( dimensions );
 		SetupPhysicsFromOBB( PhysicsMotionType.Dynamic, -dimensions, dimensions );
 		PhysicsEnabled = true;
 		UsePhysicsCollision = true;
