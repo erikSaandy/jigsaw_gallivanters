@@ -37,7 +37,7 @@ partial class Explorer
 			var ent = new PuzzlePiece( x, y );
 			ent.GenerateServer();
 
-			float spacing = 0;
+			float spacing = 2;
 			ent.Position = new Vector3( ent.X * ExplorerGame.PieceScale + (spacing * ent.X), ent.Y * ExplorerGame.PieceScale + (spacing * ent.Y), 64 );
 			SpawnPieceClient(ent);
 		}
