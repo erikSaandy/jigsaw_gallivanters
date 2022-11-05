@@ -3,9 +3,7 @@ using System;
 using System.Linq;
 using Saandy;
 
-namespace Sandbox;
-
-partial class PuzzlePiece : Prop
+public partial class PuzzlePiece : Prop
 {
 	[Net]
 	public int Index { get; private set; } = 0;
@@ -65,8 +63,8 @@ partial class PuzzlePiece : Prop
 		//Log.Error( "model: " + ExplorerGame.Game.PieceModel.ToString() );
 		Vector3 dimensions = new Vector3( ExplorerGame.PieceScale / 2, ExplorerGame.PieceScale / 2,  (ExplorerGame.PieceScale * ExplorerGame.PieceThickness) / 2 );
 		SetupPhysicsFromOBB( PhysicsMotionType.Dynamic, -dimensions, dimensions );
-		PhysicsEnabled = true;
-		UsePhysicsCollision = true;
+		//PhysicsEnabled = true;
+		//UsePhysicsCollision = true;
 	}
 
 }

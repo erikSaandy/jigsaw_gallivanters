@@ -13,7 +13,7 @@ public partial class ExplorerGame : Sandbox.Game
 {
 
 	public static readonly int BacksideUVTiling = 8;
-	public static readonly float PieceThickness = 0.06f;
+	public static readonly float PieceThickness = 0.08f;
 	public static readonly int PieceScale = 32;
 	private static readonly int PipPointCount = 12;
 	private static readonly int BodyPointCount = 12;
