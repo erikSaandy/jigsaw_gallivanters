@@ -35,7 +35,7 @@ public partial class ExplorerGame : Sandbox.Game
 
 		if( IsServer )
 		{
-			Texture t = Texture.Load( FileSystem.Mounted, "textures/kittens.png" );
+			Texture t = Texture.Load( FileSystem.Mounted, "textures/sbox.png" );
 			GetDimensions( t, out int pc );
 			Log.Error( "DIM: " + PieceCountX + "," + PieceCountY );
 		}

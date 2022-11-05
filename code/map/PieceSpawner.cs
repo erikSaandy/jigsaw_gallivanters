@@ -19,6 +19,7 @@ public class PieceSpawner : Entity
 	public override void Spawn()
 	{
 
+		Name = "PieceSpawner";
 		base.Spawn();
 
 	}

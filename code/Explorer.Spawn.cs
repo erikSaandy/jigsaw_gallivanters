@@ -1,4 +1,7 @@
-﻿using Sandbox;
+﻿using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using Sandbox;
 using Saandy;
 
 partial class Explorer
@@ -37,8 +40,10 @@ partial class Explorer
 			var ent = new PuzzlePiece( x, y );
 			ent.GenerateServer();
 
-			float spacing = 2;
-			ent.Position = new Vector3( ent.X * ExplorerGame.PieceScale + (spacing * ent.X), ent.Y * ExplorerGame.PieceScale + (spacing * ent.Y), 64 );
+			//float spacing = 4;
+			//ent.Position = new Vector3( ent.X * ExplorerGame.PieceScale + (spacing * ent.X), ent.Y * ExplorerGame.PieceScale + (spacing * ent.Y), 64 );
+			PlacePiece( ent );
+			
 			SpawnPieceClient(ent);
 		}
 
@@ -55,6 +60,17 @@ partial class Explorer
 		//	}
 		//}
 
+	}
+
+	public void PlacePiece( PuzzlePiece ent )
+	{
+
+		IEnumerable<Entity> Spawners = FindAllByName( "PieceSpawner" );
+
+
+		int id = Rand.Int( 0, Spawners.Count<Entity>() - 1 );
+
+		ent.Position = Spawners.ElementAt<Entity>( id ).Position + (Vector3.Up * 16);
 	}
 
 	[ClientRpc]
