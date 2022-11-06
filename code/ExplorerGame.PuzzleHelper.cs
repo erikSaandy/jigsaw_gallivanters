@@ -17,6 +17,9 @@ public partial class ExplorerGame : Sandbox.Game
 	public Material PuzzleImageMaterial { get; private set; } = null;
 	public Texture PuzzleImageTexture { get; private set; } = null;
 
+	[Net]
+	public string TextureAdress { get; private set; } = "textures/sbox.png";
+
 	[Net, Predicted]
 	public int PieceCountX { get; set; } = 0;
 
@@ -28,7 +31,7 @@ public partial class ExplorerGame : Sandbox.Game
 
 		if ( IsClient )
 		{
-			SetNewPuzzleTexture( Texture.Load( FileSystem.Mounted, "textures/sbox.png" ) );
+			SetNewPuzzleTexture( Texture.Load( FileSystem.Mounted, TextureAdress ) );
 			GeneratePuzzle();
 
 			if(PieceEntities != null)
@@ -40,11 +43,26 @@ public partial class ExplorerGame : Sandbox.Game
 
 		if( IsServer )
 		{
-			Texture t = Texture.Load( FileSystem.Mounted, "textures/sbox.png" );
+			Texture t = Texture.Load( FileSystem.Mounted, TextureAdress );
 			GetDimensions( t, out int pc );
 			Log.Error( "DIM: " + PieceCountX + "," + PieceCountY );
 		}
 
+	}
+
+	public void LoadNewPuzzleData()
+	{
+		Texture t = Texture.Load( FileSystem.Mounted, TextureAdress );
+		GetDimensions( t, out int pc );
+
+		LoadNewPuzzleDataClient();
+	}
+
+	[ClientRpc]
+	private void LoadNewPuzzleDataClient()
+	{
+		SetNewPuzzleTexture( Texture.Load( FileSystem.Mounted, TextureAdress ) );
+		GeneratePuzzle();
 	}
 
 	public void SetNewPuzzleTexture( Texture t )
@@ -112,12 +130,12 @@ public partial class ExplorerGame : Sandbox.Game
 		}
 	}
 
-	/// <summary>
-	/// Setup spawned in puzzle pieces to use client-loaded models.
-	/// This is for Clients joining in the middle of the game.
-	/// </summary>
 	private void LateSetupPiecesClient()
 	{
+		SetNewPuzzleTexture( Texture.Load( FileSystem.Mounted, "textures/sbox.png" ) );
+
+		GeneratePuzzle();
+
 		foreach ( PuzzlePiece p in PieceEntities )
 		{
 			SetupPieceClient( p );

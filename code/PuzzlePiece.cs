@@ -3,9 +3,9 @@ using System;
 using System.Linq;
 using Saandy;
 
-public partial class PuzzlePiece : Prop
+public partial class PuzzlePiece : BaseCarriable, IUse
 {
-	[Net]
+	[Net]	
 	public int Index { get; private set; } = 0;
 
 	[Net]
@@ -29,12 +29,24 @@ public partial class PuzzlePiece : Prop
 		this.X = x;
 		this.Y = y;
 		Index = Math2d.ArrayIndex( x, y, ExplorerGame.Game.PieceCountX, ExplorerGame.Game.PieceCountY );
+		Tags.Add( "solid" );
 	}
 
 	[Event.Tick]
 	void Tick()
 	{
 
+	}
+
+	public bool OnUse( Entity user )
+	{
+		Log.Warning( "nom" );
+		return false;
+	}
+
+	public virtual bool IsUsable( Entity user )
+	{
+		return Owner == null;
 	}
 
 	/// <summary>
@@ -65,6 +77,7 @@ public partial class PuzzlePiece : Prop
 		SetupPhysicsFromOBB( PhysicsMotionType.Dynamic, -dimensions, dimensions );
 		//PhysicsEnabled = true;
 		//UsePhysicsCollision = true;
+
 	}
 
 }

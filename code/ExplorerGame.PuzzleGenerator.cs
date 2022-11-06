@@ -15,7 +15,7 @@ public partial class ExplorerGame : Sandbox.Game
 	public static readonly int BacksideUVTiling = 8;
 	public static readonly float PieceThickness = 0.08f;
 	public static readonly int PieceScale = 32;
-	private static readonly int PipPointCount = 12;
+	private static readonly int PipPointCount = 24;
 	private static readonly int BodyPointCount = 12;
 
 	private static bool IsGenerated { get; set; } = false;
@@ -251,6 +251,7 @@ public partial class ExplorerGame : Sandbox.Game
 
         Math2d.Line side = piece.GetSide(sideIndex);
 
+		// Cublic curve for pips.
         a = side.pointA + (side.Direction * start);
         b = a + (up * 0.35f) + (left * 0.35f);
         d = side.pointA + (side.Direction * end);
